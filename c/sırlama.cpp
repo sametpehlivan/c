@@ -1,159 +1,143 @@
-//BUBBLE,MERGE VE QUİCK SORT 
+//BUBBLE,MERGE VE QUÃCK SORT 
 #include<stdio.h>
 #include<time.h>
 #include<stdlib.h>
 #include<math.h>
 
-void b_sort(int dizi[],int n){
+void b_sort(int dizi[],int n)
+{
 	clock_t start;
 	float fark;
 	int bayrak=0,temp;
-
-	while(bayrak==0){   /// bayrak ile eğer sıralıysa dizi n durumda anlamasıiçin
-		
+	while(bayrak==0)
+	{   
+		/// bayrak ile eÃ°er sÃ½ralÃ½ysa dizi n durumda anlamasÃ½iÃ§in
 		bayrak=1;
-		for( int i=0;i<n-1;i++){
-		
-			if(dizi[i]>dizi[i+1]){
+		for( int i=0;i<n-1;i++)
+		{
+
+			if(dizi[i]>dizi[i+1])
+			{
 				bayrak=0;
 				temp=dizi[i];
 				dizi[i]=dizi[i+1];
 				dizi[i+1]=temp;
-				
 			}
-			
-			n--; ///son sıralanan eleman en büyük olduğu için dizi konrolu küçültürülerek gidilmesi için
-			
+			n--; 
+			///son sÃ½ralanan eleman en bÃ¼yÃ¼k olduÃ°u iÃ§in dizi konrolu kÃ¼Ã§Ã¼ltÃ¼rÃ¼lerek gidilmesi iÃ§in
 		}
-		
-	
 	}
-    
-   	fark=clock()-start;
-	
-//	printf("%.2lf\n",(float)fark);
+	fark=clock()-start;
+	//printf("%.2lf\n",(float)fark);
 }
-
-//////////*************************************************************************///////////////////////////////////
+//////////*********************  METHOD SIGNATURE *****************///////////////////////////////////
 void merge(int dizi[],int ilk,int orta,int son);
 
-void m_sort(int dizi[],int ilk,int son){
-	
-	if (ilk<son){ //dizi iki elamnlı küçük dizilere bölünüyor
+void m_sort(int dizi[],int ilk,int son)
+{
+
+	if (ilk<son)
+	{ 
+		//dizi iki elamnlÃ½ kÃ¼Ã§Ã¼k dizilere bÃ¶lÃ¼nÃ¼yor
 		int orta=(ilk+son)/2;
 		m_sort(dizi,ilk,orta); 
 		m_sort(dizi,orta+1,son);
 		merge(dizi,ilk,orta,son);
-		
-	}
-	
-	
-	           
+	}	           
 }
-
-
-void merge(int dizi[],int ilk,int orta,int son){
+void merge(int dizi[],int ilk,int orta,int son)
+{
 	int tempArray[1000];
-	int ilk1=ilk; int ilk2=orta+1; // bölünen küçük 2 elamanlı diziler tekrar 2'ye bölünüyor
+	int ilk1=ilk; int ilk2=orta+1; // bÃ¶lÃ¼nen kÃ¼Ã§Ã¼k 2 elamanlÃ½ diziler tekrar 2'ye bÃ¶lÃ¼nÃ¼yor
 	int son1=orta; int son2=son;
 	int index=ilk1;
-	
-	while(ilk1<=son1 && ilk2<=son2){
-		
-		if(dizi[ilk1]<dizi[ilk2]){      
+	while(ilk1<=son1 && ilk2<=son2)
+	{
+		if(dizi[ilk1]<dizi[ilk2])
+		{      
 			tempArray[index]=dizi[ilk1]; 
 			ilk1++;
 		}
-		else{
+		else
+		{
 			tempArray[index]=dizi[ilk2];
 			ilk2++;
-			
 		}
-	 index++;	
-   	}///eger ikli grupdaki dizilerden en büyük elamn  birinci dizideyese o eleman yukardaki döngüde yerleştirilmediği için burada yerleştirilor veya aynı olay 2. diziedeyse 
-	   //2. ,döngüde yerleştiriliyor
-	while(ilk1<=son1  ){
+		index++;	
+	}
+	///eger ikli grupdaki dizilerden en bÃ¼yÃ¼k elamn  birinci dizideyese o eleman yukardaki dÃ¶ngÃ¼de yerleÃ¾tirilmediÃ°i iÃ§in burada yerleÃ¾tirilor veya aynÃ½ olay 2. diziedeyse 
+	//2. ,dÃ¶ngÃ¼de yerleÃ¾tiriliyor
+	while(ilk1<=son1)
+	{
 		tempArray[index]=dizi[ilk1];
 		ilk1++;
 		index++;
 	}
-	while(ilk2<=son2 ){
+	while(ilk2<=son2)
+	{
 		tempArray[index]=dizi[ilk2];
-	   ilk2++;
-	   index++;
+		ilk2++;
+		index++;
 	}
-	for(index=ilk;index<=son;index++){    //kopya diziye yerleştiriliyor
+	for(index=ilk;index<=son;index++)
+	{    
+		//kopya diziye yerleÃ¾tiriliyor
 		dizi[index]=tempArray[index];
 	}
-  
-
 }
 
 ////////////////////////////**************************************************************////////////////////////////////
-int Dayanak(int dizi[],int alt,int ust);
-
-void q_sort(int dizi[],int alt,int ust){
+int Dayanak(int dizi[],int alt,int ust); //
+void q_sort(int dizi[],int alt,int ust)
+{
 	int dayanak;
-	if (alt<ust){
+	if (alt<ust)
+	{
 		dayanak = Dayanak(dizi,alt,ust);
 		q_sort(dizi,alt,dayanak-1);
 		q_sort(dizi,dayanak+1,ust);
-		
+
 	}
-	
-	
-	
-	
-	
 }
 
+int Dayanak(int dizi[],int alt_indis,int ust_indis) 
+{ 
+	int i,j,pivot_degeri,pivot_indisi,gecici;  
+	pivot_degeri=dizi[alt_indis];  
+	j=alt_indis; 
+	for(i=alt_indis+1;i<=ust_indis;i++) 
+	{   
 
-
-int Dayanak(int dizi[],int alt_indis,int ust_indis) { 
-    int i,j,pivot_degeri,pivot_indisi,gecici;  
-
-     pivot_degeri=dizi[alt_indis];  
-     j=alt_indis; 
-
-     for(i=alt_indis+1;i<=ust_indis;i++) {   
-
-        if (dizi[i]>pivot_degeri)  {  
-          j++;                        /// pivot degerinden sonraki elaman ,pivattan büyük elaman gelene kadar yeri değişmeyek büyük elaman geldiğinde sadece i değeşecek ve   
-		  gecici=dizi[i];               ///  büyük elamandan sonra pivottan küçük elaman gelirse j büyük elamanın hemen arkasında olduğundan j büyük elemanı gösterecek
-          dizi[i]=dizi[j];              /// küçük elamn ile pivottan büyük elaman yer değişirecek pivotun yeri sabit !!!!!!
-          dizi[j]=gecici; 
-         }
-     }
-     pivot_indisi=j;        ////burada ise j pivottan küçük grubun en sagındaki elamı göterdiğinden dolayı pivot ile j nin gösterdiği elaman yer değişirerek    
-     gecici=dizi[alt_indis];  //// pivot ortaya alınır 
-     dizi[alt_indis]=dizi[pivot_indisi]; 
-     dizi[pivot_indisi]=gecici; 
-     return pivot_indisi;  
+		if (dizi[i]>pivot_degeri)  
+		{  
+		j++; /// pivot degerinden sonraki elaman ,pivattan bÃ¼yÃ¼k elaman gelene kadar yeri deÃ°iÃ¾meyek bÃ¼yÃ¼k elaman geldiÃ°inde sadece i deÃ°eÃ¾ecek ve   
+		gecici=dizi[i];  ///  bÃ¼yÃ¼k elamandan sonra pivottan kÃ¼Ã§Ã¼k elaman gelirse j bÃ¼yÃ¼k elamanÃ½n hemen arkasÃ½nda olduÃ°undan j bÃ¼yÃ¼k elemanÃ½ gÃ¶sterecek
+		dizi[i]=dizi[j]; /// kÃ¼Ã§Ã¼k elamn ile pivottan bÃ¼yÃ¼k elaman yer deÃ°iÃ¾irecek pivotun yeri sabit !!!!!!
+		dizi[j]=gecici; 
+		}
+	}
+	pivot_indisi=j; ////burada ise j pivottan kÃ¼Ã§Ã¼k grubun en sagÃ½ndaki elamÃ½ gÃ¶terdiÃ°inden dolayÃ½ pivot ile j nin gÃ¶sterdiÃ°i elaman yer deÃ°iÃ¾irerek    
+	gecici=dizi[alt_indis]; //// pivot ortaya alÃ½nÃ½r 
+	dizi[alt_indis]=dizi[pivot_indisi]; 
+	dizi[pivot_indisi]=gecici; 
+	return pivot_indisi;  
  } 
 
-
 int main(){
-
 	int dizi[100];
-	
 	srand(time(NULL));
-	for(int i=0;i<100;i++){
+	for(int i=0;i<100;i++)
+	{
 		dizi[i]=rand()%1000;
 	}
-        
-   	//b_sort(dizi,100);
-
-     // m_sort(dizi,0,99)  ;
+	//b_sort(dizi,100);
+	//m_sort(dizi,0,99);
 	dizi[0]=2;
 	dizi[1]=3;
 	q_sort(dizi,0,99);
-    printf("\n\n\n");
-	for(int i=0;i<100;i++){
+	printf("\n\n\n");
+	for(int i=0;i<100;i++)
+	{
 		printf("%d   %d\n",dizi[i],i+1);
-	}
-  
-	
-	
+	}	
 }
-
-
